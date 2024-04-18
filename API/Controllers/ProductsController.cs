@@ -1,5 +1,6 @@
 using API.DTOs;
 using API.Errors;
+using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
@@ -26,12 +27,19 @@ namespace API.Controllers
 
         [HttpGet]
         // public async Task<ActionResult<List<Product>>> GetProducts()
-        public async Task<ActionResult<IReadOnlyList<ProductDTO>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductDTO>>> GetProducts(
+                [FromQuery] ProductSpecParams productParams)
         {
             //var products = await _repository.GetProductsAsync();
-            var spec = new ProductSpecwithBrandAndType();
+            var spec = new ProductSpecwithBrandAndType(productParams);
+
+            var countSpec = new ProductFilterForCountSpec(productParams);
+
+            var totalItems = await _productRepo.CountAsync(countSpec);
+
             var products = await _productRepo.ListAsync(spec);
 
+            #region //Commented Oldcode
             // return products.Select(product => new ProductDTO
             // {
             //     Id = product.Id,
@@ -42,8 +50,11 @@ namespace API.Controllers
             //     ProductBrand = product.ProductBrand.Name,
             //     ProductType = product.ProductType.Name
             // }).ToList();
-
-            return Ok(_mapper.Map<IReadOnlyList<ProductDTO>>(products));
+            #endregion
+            
+            var data = _mapper.Map<IReadOnlyList<ProductDTO>>(products);
+            return Ok(new Pagination<ProductDTO>(productParams.PageIndex, 
+            productParams.PageSize, totalItems, data));
             //return Ok(products);
         }
 
@@ -56,17 +67,7 @@ namespace API.Controllers
             //return await _productRepo.GetByIdAsync(id);
             var spec = new ProductSpecwithBrandAndType(id);
             var product = await _productRepo.GetEntityWithSpec(spec);
-
-            // return new ProductDTO
-            // {
-            //     Id = product.Id,
-            //     Name = product.Name,
-            //     Description = product.Description,
-            //     Price = product.Price,
-            //     PictureUrl = product.PictureUrl,
-            //     ProductBrand = product.ProductBrand.Name,
-            //     ProductType = product.ProductType.Name
-            // };
+            
             if (product == null) return NotFound(new ApiResponse(404));
 
             return Ok(_mapper.Map<ProductDTO>(product));
