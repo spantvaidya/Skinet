@@ -9,3 +9,5 @@ import { Product } from '../../shared/models/product';
 export class ProductItemComponent {
 @Input() product? : Product;
 }
+
+
