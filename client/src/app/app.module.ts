@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
 import { ShopModule } from './shop/shop.module';
 import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { HomeModule } from './home/home.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
     HttpClientModule,
     FontAwesomeModule,
     CoreModule,
-    ShopModule
+    ShopModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
