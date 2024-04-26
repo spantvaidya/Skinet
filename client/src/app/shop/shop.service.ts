@@ -14,6 +14,10 @@ export class ShopService {
   baseUrl: string = 'https://localhost:7151/api/';
   constructor(private http: HttpClient) { }
 
+
+  getProduct(id: number) {
+    return this.http.get<Product>(this.baseUrl + 'products/' + id);
+  }
   // getProducts(brandId?: number, typeId?: number, sort?: string) {
   getProducts(shopParams: ShopParams) {
     let params = new HttpParams();

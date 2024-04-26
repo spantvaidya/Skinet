@@ -6,7 +6,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
-import { ShopModule } from './shop/shop.module';
 import {FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { HomeModule } from './home/home.module';
 
@@ -22,7 +21,6 @@ import { HomeModule } from './home/home.module';
     HttpClientModule,
     FontAwesomeModule,
     CoreModule,
-    ShopModule,
     HomeModule
   ],
   providers: [],
