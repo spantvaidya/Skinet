@@ -8,12 +8,12 @@ namespace API.Errors
 {
     public class ApiException : ApiResponse
     {
-        public ApiException(int statusCode, string errorMessage = null, string details = null) 
+        public ApiException(int statusCode, string errorMessage = null, string details = null)
         : base(statusCode, errorMessage)
         {
-
+            Details = details;
         }
 
-        public string details { get; set; }
+        public string Details { get; set; }
     }
 }
