@@ -90,6 +90,11 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
+            if (CheckEmailExistsAsync(registerDto.Email).Result.Value)
+            {
+                return new BadRequestObjectResult(new ApiValidationErrorResponse { Errors = ["Email already exists"] });
+            }
+
             var user = new AppUser
             {
                 DisplayName = registerDto.DisplayName,
@@ -111,19 +116,16 @@ namespace API.Controllers
                 Email = user.Email
             };
         }
+
         [Authorize]
         [HttpPut("address")]
         public async Task<ActionResult<AddressDto>> UpdateAddress(AddressDto addressDto)
         {
             var user = await _userManager.FindUserByClaimsWithAddress(HttpContext.User);
-
             user.Address = _mapper.Map<Address>(addressDto);
-
             var result = await _userManager.UpdateAsync(user);
-
             if (result.Succeeded) return Ok(_mapper.Map<AddressDto>(user.Address));
-
-            return BadRequest("Problem in Updating the User !");
+            return BadRequest("Problem in Updating the User!");
         }
     }
 }
