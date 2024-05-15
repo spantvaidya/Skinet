@@ -25,7 +25,7 @@ export class ErrorInterceptorService implements HttpInterceptor {
             }
           }
 
-          if (error.status === 400) {
+          if (error.status === 401) {
             this.toastr.error(error.error.errorMessage, error.status.toString());
           } 
           
