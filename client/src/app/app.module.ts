@@ -9,6 +9,7 @@ import { CoreModule } from './core/core.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { HomeModule } from './home/home.module';
 import { ErrorInterceptorService } from './core/interceptors/error-interceptor.service';
+import { LoadingInterceptorService } from './core/interceptors/loading-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { ErrorInterceptorService } from './core/interceptors/error-interceptor.s
     HomeModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })
