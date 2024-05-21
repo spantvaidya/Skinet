@@ -1,17 +1,20 @@
 <header class="d-flex flex-md-row align-items-center justify-content-between p-3 px-4 mb-3 
 border-bottom bg-white fixed-top border-bottom shadow-sm">
     <!-- <img src="/assets/images/logo.png" alt="logo" class="logo" style="max-height: 70px;" routerLink="/"> -->
-    <img src="/assets/images/sameer_artz_logo_black.jpg" alt="logo" class="logo" style="max-height: 70px;" routerLink="/">
+    <img src="/assets/images/sameer_artz_logo_black.jpg" alt="logo" class="logo" style="max-height: 70px;"
+        routerLink="/">
     <nav class="my-2 text-uppercase fs-5">
-
         <a class="p-2" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}" routerLink="/">Home</a>
         <a class="p-2" routerLinkActive="active" routerLink="/shop">Shop</a>
         <a class="p-2" routerLinkActive="active" routerLink="/test-error">Error</a>
     </nav>
     <div class="d-flex align-items-center">
-        <a style="position: relative;">
+        <a routerLink="/basket" class="position-relative">
             <i class="fa fa-shopping-cart fa-2x me-5 text-dark"></i>
-            <div class="cart-no">5</div>
+            <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no">
+                {{ getCount(basket.items) }}
+                <!-- {{basket.items.length}} -->
+            </div>
         </a>
         <ng-container *ngIf="(accountService.currentUser$ |async) === null">
             <a routerLink="account/login" class="btn btn-outline-secondary me-2">Login</a>
