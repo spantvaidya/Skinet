@@ -5,7 +5,7 @@
         </div>
         <div class="col-6 mt-5">
             <h1>{{product.name}}</h1>
-            <P style="font-size: 1.5em;">{{product.price | currency}}</P>
+            <P style="font-size: 1.5em;">{{product.price | currency: 'INR': true}}</P>
 
             <h5 class="text-primary mb-3" *ngIf="quantityInBasket > 0">
                 You have {{quantityInBasket}} of this item in your basket

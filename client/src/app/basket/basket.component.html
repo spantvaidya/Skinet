@@ -46,7 +46,7 @@
                                     </div>
                                 </th>
                                 <td class="align-middle" style="font-size: large;">
-                                    <strong>{{item.price | currency}}</strong>
+                                    <strong>{{item.price | currency: 'INR': true}}</strong>
                                 </td>
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center" style="font-size: large;">
@@ -59,7 +59,7 @@
                                 </td>
                                 <td class="align-middle" style="font-size: large;">
                                     <strong>{{item
-                                        .price * item.quantity | currency}}</strong>
+                                        .price * item.quantity | currency: 'INR': true}}</strong>
                                 </td>
                                 <td class="align-middle" style="font-size: large;">
                                     <a class="text-danger">
