@@ -15,7 +15,7 @@ export class ProductDetailsComponent implements OnInit {
 
   product?: Product;
   quantity = 1;
-  quantityInBasket = 1;
+  quantityInBasket = 0;
 
   constructor(private shopService: ShopService, private activatedRoute: ActivatedRoute,
     private bcService: BreadcrumbService, private basketService: BasketService) {
@@ -58,6 +58,7 @@ export class ProductDetailsComponent implements OnInit {
     if (this.product) {
       if (this.quantity > this.quantityInBasket) {
         const itemsToAdd = this.quantity - this.quantityInBasket;
+        this.quantityInBasket += itemsToAdd;
         this.basketService.addItemToBasket(this.product, itemsToAdd);
       }
       else {
