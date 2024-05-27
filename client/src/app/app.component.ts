@@ -28,6 +28,5 @@ export class AppComponent implements OnInit {
     // if (token) this.accountService.loadCurrentUser(token).subscribe();
     this.accountService.loadCurrentUser(token).subscribe();
   }
-  
 }
 

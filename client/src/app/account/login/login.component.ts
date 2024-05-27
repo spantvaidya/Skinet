@@ -16,14 +16,15 @@ export class LoginComponent {
 
   returnUrl: string;
 
-  constructor(private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private accountService: AccountService, private router: Router, 
+    private activatedRoute: ActivatedRoute) {
     this.returnUrl = activatedRoute.snapshot.queryParams['returnUrl'] || '/shop'
   }
 
   onSubmit() {
     this.accountService.login(this.loginForm.value).subscribe({
       //next: user => console.log(user)
-      next: () => this.router.navigateByUrl('/shop')
+      next: () => this.router.navigateByUrl(this.returnUrl)
     });
   }
 }

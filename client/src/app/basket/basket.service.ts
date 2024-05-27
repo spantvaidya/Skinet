@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Basket, BasketItem, BasketTotals } from '../shared/models/basket';
 import { HttpClient } from '@angular/common/http';
 import { Product } from '../shared/models/product';
+import { DeliveryMethod } from '../shared/models/deliveryMethod';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,25 @@ export class BasketService {
 
   constructor(private http: HttpClient) { }
 
+  createPaymentIntent() {
+    return this.http.post<Basket>(this.baseUrl + 'payments/' + this.getCurrentBasketValue()?.id, {})
+      .pipe(
+        map(basket => {
+          this.basketSource.next(basket);
+        })
+      )
+  }
+
+  setShippingPrice(deliveryMethod: DeliveryMethod) {
+    //debugger;
+    const basket = this.getCurrentBasketValue();
+    if (basket) {
+      basket.shippingPrice = deliveryMethod.price;
+      basket.deliveryMethodId = deliveryMethod.id;
+      this.setBasket(basket);
+    }
+  }
+
   getBasket(id: string) {
     return this.http.get<Basket>(this.baseUrl + 'basket?id=' + id).subscribe({
       next: basket => {
@@ -27,6 +47,7 @@ export class BasketService {
   }
 
   private setBasket(basket: Basket) {
+    //debugger;    
     return this.http.post<Basket>(this.baseUrl + 'basket', basket).subscribe({
       next: basket => {
         this.basketSource.next(basket);
@@ -52,24 +73,28 @@ export class BasketService {
     const basket = this.getCurrentBasketValue();
     if (!basket) return;
     const item = basket.items.find(x => x.id === id);
-    if(item){
+    if (item) {
       item.quantity -= quantity;
-      if(item.quantity === 0){
-        basket.items = basket.items.filter(x => x.id !==id)
+      if (item.quantity === 0) {
+        basket.items = basket.items.filter(x => x.id !== id)
       }
 
-      if(basket.items.length > 0) this.setBasket(basket);
+      if (basket.items.length > 0) this.setBasket(basket);
       else this.deleteBasket(basket);
     }
   }
   deleteBasket(basket: Basket) {
     return this.http.delete(this.baseUrl + 'basket?id=' + basket.id).subscribe({
       next: () => {
-        this.basketSource.next(null);
-        this.basketTotalSource.next(null);
-        localStorage.removeItem('basket_id');
+        this.deleteLocalBasket();
       }
     })
+  }
+
+  deleteLocalBasket() {
+    this.basketSource.next(null);
+    this.basketTotalSource.next(null);
+    localStorage.removeItem('basket_id');
   }
 
   private addOrUpdateItem(items: BasketItem[], itemToAdd: BasketItem, quantity: number): BasketItem[] {
@@ -101,13 +126,12 @@ export class BasketService {
   }
 
   private calculateTotals() {
+    //debugger;
     const basket = this.getCurrentBasketValue();
     if (!basket) return;
-
-    const shipping = 30;
     const subtotal = basket.items.reduce((a, b) => (b.price * b.quantity) + a, 0);
-    const total = subtotal + shipping;
-    this.basketTotalSource.next({ shipping, total, subtotal });
+    const total = subtotal + basket.shippingPrice;
+    this.basketTotalSource.next({ shipping: basket.shippingPrice, total, subtotal });
   }
 
   private isProduct(item: Product | BasketItem): item is Product {
