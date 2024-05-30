@@ -19,11 +19,11 @@
                             style="max-height: 50px;"
                         >
                         <div class="ms-3 d-inline-block align-middle">
-                            <h5 class="mb-1">
+                            <h6 class="mb-1">
                                 <a routerLink="/shop/{{item.id}}" class=" text-decoration-none">
                                     {{item.name}}
                                 </a>
-                            </h5>
+                            </h6>
                             <span class="text-muted fst-italic">
                                 Type: {{item.type}}
                             </span>
@@ -35,13 +35,13 @@
                 <td class="align-middle">
                     <div class="d-flex align-items-center" 
                         [class.justify-content-center]="!isBasket">
-                        <i *ngIf="isBasket" class="fa fa-minus-circle text-warning me-2" 
-                            style="cursor: pointer; font-size: 2em;"
+                        <i *ngIf="isBasket" class="fa fa-minus-circle text-warning me-3" 
+                            style="cursor: pointer; font-size: 1.5em;"
                             (click)="removeBasketItem(item.id, 1)"
                         ></i>
                         <strong style="font-size: 1.2em;">{{item.quantity}}</strong>
-                        <i *ngIf="isBasket" class="fa fa-plus-circle text-warning mx-2" 
-                            style="cursor: pointer; font-size: 2em;"
+                        <i *ngIf="isBasket" class="fa fa-plus-circle text-warning mx-3" 
+                            style="cursor: pointer; font-size: 1.5em;"
                             (click)="addBasketItem(item)"    
                         ></i>
                     </div>

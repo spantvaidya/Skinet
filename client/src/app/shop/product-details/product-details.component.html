@@ -4,8 +4,8 @@
             <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="w-100" style="height: 100%;">
         </div>
         <div class="col-6 mt-5">
-            <h1>{{product.name}}</h1>
-            <P style="font-size: 1.5em;">{{product.price | currency: 'INR'}}</P>
+            <h3>{{product.name}}</h3>
+            <P style="font-size: 1.2em;">{{product.price | currency: 'INR'}}</P>
 
             <h5 class="text-primary mb-3" *ngIf="quantityInBasket > 0">
                 You have {{quantityInBasket}} of this item in your basket
@@ -13,12 +13,12 @@
 
             <div class="d-flex justify-content-start align-items-center">
                 <i (click)="decrementQuantity()" class="fa fa-minus-circle text-warning me-3"
-                    style="cursor: pointer; font-size: 2em;"></i>
-                <span class="font-weight-bold" style="font-size: 1.5em;">
+                    style="cursor: pointer; font-size: 1.5em;"></i>
+                <span class="font-weight-bold" style="font-size: 1.2em;">
                     {{quantity}}
                 </span>
                 <i (click)="incrementQuantity()" class="fa fa-plus-circle text-warning ms-3"
-                    style="cursor: pointer; font-size: 2em;"></i>
+                    style="cursor: pointer; font-size: 1.5em;"></i>
                 <button 
                     (click)="updateBasket()"
                     [disabled]="quantity === quantityInBasket"
@@ -26,7 +26,7 @@
             </div>
             <div class="row mt-4">
                 <h3>Description</h3>
-                <p style="font-size: 1.5em; font-weight:400;"> {{product.description}}</p>
+                <p style="font-size: 1.2em; font-weight:400;"> {{product.description}}</p>
             </div>
         </div>
     </div>

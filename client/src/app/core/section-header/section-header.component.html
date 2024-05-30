@@ -5,7 +5,8 @@
         <div class="container" style="border-bottom: solid 1px grey;">
             <div class="row d-flex align-items-center">
                 <div class="col-9 header-text">
-                    <h1>{{ breadcrumbs[breadcrumbs.length-1].label}}</h1>
+                    <h1 *ngIf="breadcrumbs[breadcrumbs.length-1].label !== 'productDetails'">
+                    {{ breadcrumbs[breadcrumbs.length-1].label}}</h1>
                 </div>
                 <div class="col-3">
                     <xng-breadcrumb>

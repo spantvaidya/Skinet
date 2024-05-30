@@ -2,6 +2,7 @@
     <input type="{{type}}" [formControl]="control" placeholder="{{label}}" class="form-control"
         [ngClass]="(control.touched)? control.invalid ? 'is-invalid': 'is-valid' : null">
     <div *ngIf="control.status === 'PENDING'" class="fa fa-spinner fa-spin loader"></div>
+    
     <label for="floatingInput">{{label}}</label>
     <div *ngIf="control.errors?.['required']" class="invalid-feedback">{{label}} is required</div>
     <div *ngIf="control.errors?.['email']" class="invalid-feedback">Invalid Email</div>

@@ -1,0 +1,45 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center pb-2">
+                <app-paging-header [totalCount]="totalCount" [pageIndex]="orderParams.pageIndex"
+                    [pageSize]="orderParams.pageSize">
+                </app-paging-header>
+
+                <div class="d-flex mt-2">
+                    <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
+                    <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
+                    <button (click)="onReset()" class="btn btn-outline-success mx-2">Reset</button>
+                </div>
+            </div>
+            <table class="table table-hover" style="cursor: pointer; font-size: large;">
+                <thead>
+                    <tr>
+                        <th class="border-0 bg-dark">Order</th>
+                        <th class="border-0 bg-dark">Date</th>
+                        <th class="border-0 bg-dark">Total</th>
+                        <th class="border-0 bg-dark">Status</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="orders">
+                    <tr *ngFor="let order of orders" routerLink="/orders/{{order.id}}">
+                        <th># {{order.id}}</th>
+                        <td>{{order.orderDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{order.total | currency : 'INR'}}</td>
+                        <td>{{order.status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="row row-cols-3" *ngIf="totalCount <= 0">
+                <col class="col" style="text-align: center;">
+                <h5>No Records Found</h5>
+            </div>
+            <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
+                <app-pager [totalCount]="totalCount" [pageSize]="orderParams.pageSize"
+                    (pageChanged)="onPageChanged($event)">
+                </app-pager>
+            </div>
+        </div>
+    </div>
+</div>
