@@ -10,7 +10,7 @@
 
             <h5 class="text-warning ms-3"> Brands </h5>
             <ul class="list-group my-3">
-                <li class="list-group-item logo" *ngFor="let brand of brands"
+                <li class="list-group-item list-group-item-action logo" *ngFor="let brand of brands"
                     [class.active]="brand.id === shopParams.brandId" [value]="brand.id"
                     (click)="onBrandSelected(brand.id)">{{brand.name}}</li>
             </ul>

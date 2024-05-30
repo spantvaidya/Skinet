@@ -1,9 +1,21 @@
-.logo{
+.logo {
     cursor: pointer;
 }
 
-.list-group-item{
+.list-group-item {
     cursor: pointer;
+    border: none;
+    font-size: large;
+    padding: 10px;
+
+    &.active {
+        border-radius: 10px;
+    }
+
+    &:not(.active):hover{
+        color: black;
+        border-radius: 10px;
+    }
 }
 
 // & active:hover{
